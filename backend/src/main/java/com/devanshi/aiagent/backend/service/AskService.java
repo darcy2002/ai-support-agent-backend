@@ -1,5 +1,7 @@
 package com.devanshi.aiagent.backend.service;
 
-public class AskService {
+public interface AskService {
+
+    String processQuestion(String question);
 
 }
