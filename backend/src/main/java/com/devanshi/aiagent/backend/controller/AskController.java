@@ -6,6 +6,9 @@ import com.devanshi.aiagent.backend.dto.ConversationResponse;
 import com.devanshi.aiagent.backend.service.AskService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import java.util.List;
 
 @RestController
@@ -25,8 +28,10 @@ public class AskController {
     }
 
     @GetMapping("/history")
-    public List<ConversationResponse> history() {
-        return askService.getConversationHistory();
+    public Page<ConversationResponse> history(
+            @PageableDefault(size = 5, sort = "createdAt") Pageable pageable) {
+
+        return askService.getConversationHistory(pageable);
     }
 
 }

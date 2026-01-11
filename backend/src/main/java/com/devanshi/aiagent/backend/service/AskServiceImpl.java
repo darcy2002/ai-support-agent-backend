@@ -1,5 +1,7 @@
 package com.devanshi.aiagent.backend.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.devanshi.aiagent.backend.dto.ConversationResponse;
 import com.devanshi.aiagent.backend.entity.Conversation;
 import com.devanshi.aiagent.backend.repository.ConversationRepository;
@@ -31,14 +33,13 @@ public class AskServiceImpl implements AskService {
     }
 
     @Override
-    public List<ConversationResponse> getConversationHistory() {
-        return repository.findAll()
-                .stream()
+    public Page<ConversationResponse> getConversationHistory(Pageable pageable) {
+
+        return repository.findAll(pageable)
                 .map(c -> new ConversationResponse(
                         c.getId(),
                         c.getQuestion(),
                         c.getAnswer(),
-                        c.getCreatedAt()))
-                .toList();
+                        c.getCreatedAt()));
     }
 }

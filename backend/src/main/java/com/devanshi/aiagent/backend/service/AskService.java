@@ -1,11 +1,13 @@
 package com.devanshi.aiagent.backend.service;
 
 import com.devanshi.aiagent.backend.dto.ConversationResponse;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface AskService {
 
     String processQuestion(String question);
 
-    List<ConversationResponse> getConversationHistory();
+    Page<ConversationResponse> getConversationHistory(Pageable pageable);
+
 }
