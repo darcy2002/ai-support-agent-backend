@@ -2,14 +2,10 @@ package com.devanshi.aiagent.backend.controller;
 
 import com.devanshi.aiagent.backend.dto.AskRequest;
 import com.devanshi.aiagent.backend.dto.AskResponse;
-import com.devanshi.aiagent.backend.dto.ConversationResponse;
 import com.devanshi.aiagent.backend.service.AskService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/api/ask")
@@ -27,11 +23,13 @@ public class AskController {
         return new AskResponse(answer);
     }
 
-    @GetMapping("/history")
-    public Page<ConversationResponse> history(
-            @PageableDefault(size = 5, sort = "createdAt") Pageable pageable) {
+    @PostMapping("/async")
+    public CompletableFuture<AskResponse> askAsync(
+            @Valid @RequestBody AskRequest request) {
 
-        return askService.getConversationHistory(pageable);
+        return askService
+                .processQuestionAsync(request.getQuestion())
+                .thenApply(AskResponse::new);
     }
 
 }
