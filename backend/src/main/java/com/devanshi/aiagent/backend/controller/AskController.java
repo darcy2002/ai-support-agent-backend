@@ -5,6 +5,8 @@ import com.devanshi.aiagent.backend.dto.AskResponse;
 import com.devanshi.aiagent.backend.service.AskService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+import com.devanshi.aiagent.backend.entity.Conversation;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/ask")
@@ -21,4 +23,10 @@ public class AskController {
         String answer = askService.processQuestion(request.getQuestion());
         return new AskResponse(answer);
     }
+
+    @GetMapping("/history")
+    public List<Conversation> history() {
+        return askService.getAllConversations();
+    }
+
 }
