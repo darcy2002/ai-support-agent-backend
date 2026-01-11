@@ -1,5 +1,6 @@
 package com.devanshi.aiagent.backend.service;
 
+import com.devanshi.aiagent.backend.dto.ConversationResponse;
 import com.devanshi.aiagent.backend.entity.Conversation;
 import com.devanshi.aiagent.backend.repository.ConversationRepository;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,14 @@ public class AskServiceImpl implements AskService {
     }
 
     @Override
-    public List<Conversation> getAllConversations() {
-        return repository.findAll();
+    public List<ConversationResponse> getConversationHistory() {
+        return repository.findAll()
+                .stream()
+                .map(c -> new ConversationResponse(
+                        c.getId(),
+                        c.getQuestion(),
+                        c.getAnswer(),
+                        c.getCreatedAt()))
+                .toList();
     }
 }

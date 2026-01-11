@@ -2,10 +2,10 @@ package com.devanshi.aiagent.backend.controller;
 
 import com.devanshi.aiagent.backend.dto.AskRequest;
 import com.devanshi.aiagent.backend.dto.AskResponse;
+import com.devanshi.aiagent.backend.dto.ConversationResponse;
 import com.devanshi.aiagent.backend.service.AskService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-import com.devanshi.aiagent.backend.entity.Conversation;
 import java.util.List;
 
 @RestController
@@ -25,8 +25,8 @@ public class AskController {
     }
 
     @GetMapping("/history")
-    public List<Conversation> history() {
-        return askService.getAllConversations();
+    public List<ConversationResponse> history() {
+        return askService.getConversationHistory();
     }
 
 }
