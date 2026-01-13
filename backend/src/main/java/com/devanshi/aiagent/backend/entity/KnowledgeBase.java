@@ -1,33 +1,27 @@
 package com.devanshi.aiagent.backend.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "conversations")
-public class Conversation {
+@Table(name = "knowledge_base")
+public class KnowledgeBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 500)
     private String question;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2000)
     private String answer;
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-
-    protected Conversation() {
-        // for JPA
+    public KnowledgeBase() {
     }
 
-    public Conversation(String question, String answer) {
+    public KnowledgeBase(String question, String answer) {
         this.question = question;
         this.answer = answer;
-        this.createdAt = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -40,9 +34,5 @@ public class Conversation {
 
     public String getAnswer() {
         return answer;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
     }
 }

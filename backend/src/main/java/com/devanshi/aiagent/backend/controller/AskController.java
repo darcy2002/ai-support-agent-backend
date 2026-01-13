@@ -5,7 +5,6 @@ import com.devanshi.aiagent.backend.dto.AskResponse;
 import com.devanshi.aiagent.backend.service.AskService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/api/ask")
@@ -21,15 +20,6 @@ public class AskController {
     public AskResponse ask(@Valid @RequestBody AskRequest request) {
         String answer = askService.processQuestion(request.getQuestion());
         return new AskResponse(answer);
-    }
-
-    @PostMapping("/async")
-    public CompletableFuture<AskResponse> askAsync(
-            @Valid @RequestBody AskRequest request) {
-
-        return askService
-                .processQuestionAsync(request.getQuestion())
-                .thenApply(AskResponse::new);
     }
 
 }
